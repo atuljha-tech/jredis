@@ -35,24 +35,24 @@ Instead of building a simple HTTP wrapper, `jredis` speaks the actual binary pro
 
 ```mermaid
 graph TD
-    Client[redis-cli / Standard Redis Client] -->|RESP over TCP| Server[RedisServer]
+    Client["redis-cli / Standard Redis Client"] -->|RESP over TCP| Server["RedisServer"]
     
-    subgraph Server Core
-        Server -->|Spawns| Handler[ClientHandler (Thread)]
-        Handler --> Parser[RespParser]
-        Handler --> Encoder[RespEncoder]
-        Handler --> Commands[CommandRegistry]
+    subgraph ServerCore ["Server Core"]
+        Server -->|Spawns| Handler["ClientHandler (Thread)"]
+        Handler --> Parser["RespParser"]
+        Handler --> Encoder["RespEncoder"]
+        Handler --> Commands["CommandRegistry"]
     end
 
-    subgraph Data & Storage
-        Commands --> DB[Database Engine]
-        DB --> Store[(ConcurrentHashMap)]
-        DB --> Expiry[Expiry Janitor]
-        DB --> RDB[RdbSerializer]
+    subgraph DataStorage ["Data & Storage"]
+        Commands --> DB["Database Engine"]
+        DB --> Store[("ConcurrentHashMap")]
+        DB --> Expiry["Expiry Janitor"]
+        DB --> RDB["RdbSerializer"]
     end
 
-    subgraph Persistence
-        RDB -->|Atomic Write| Disk[dump.rdb]
+    subgraph Persistence ["Persistence"]
+        RDB -->|Atomic Write| Disk["dump.rdb"]
     end
 ```
 
