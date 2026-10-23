@@ -1,0 +1,9 @@
+target/
+.git/
+.github/
+.idea/
+.vscode/
+*.iml
+dump.rdb
+dump.rdb.tmp
+README.md
